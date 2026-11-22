@@ -46,6 +46,11 @@ create table if not exists orders (
 
 create index if not exists orders_status_idx on orders(status);
 
+-- Newer Supabase projects don't grant table access to API roles automatically.
+-- The server uses the service_role key, so give that role access explicitly.
+grant usage on schema public to service_role;
+grant all on sellers, products, orders to service_role;
+
 alter table sellers enable row level security;
 alter table products enable row level security;
 alter table orders enable row level security;
