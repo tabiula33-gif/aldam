@@ -21,6 +21,16 @@ const dict = {
     testMode: "Туршилтын горим: жинхэнэ төлбөр авахгүй.",
     notFound: "Олдсонгүй",
     back: "Буцах",
+    heroTitle: "Монгол бүтээгчдийн дижитал бүтээгдэхүүн",
+    heroText: "PDF, төлөвлөгч, сургалтыг QPay-ээр төлөөд шууд татаж аваарай.",
+    browse: "Бүтээгдэхүүн үзэх",
+    perks: ["QPay-ээр төлнө", "Төлсний дараа шууд татна", "Монгол бүтээгчдийн бүтээл"],
+    newest: "Шинэ бүтээгдэхүүн",
+    whatYouGet: "Төлбөр төлсний дараа татах холбоос шууд гарна. Энэ хуудасны холбоосоор дахин татаж болно.",
+    secure: "Төлбөр QPay-ээр баталгаажна",
+    footerText: "Монголд бүтээгдсэн дижитал бүтээгдэхүүний дэлгүүр.",
+    contact: "Холбоо барих",
+    rights: "Бүх эрх хуулиар хамгаалагдсан.",
   },
   en: {
     tagline: "Digital products from Mongolian creators",
@@ -40,10 +50,21 @@ const dict = {
     testMode: "Test mode: no real payment is taken.",
     notFound: "Not found",
     back: "Back",
+    heroTitle: "Digital products from Mongolian creators",
+    heroText: "PDFs, planners and courses. Pay with QPay and download instantly.",
+    browse: "Browse products",
+    perks: ["Pay with QPay", "Instant download after payment", "Made by Mongolian creators"],
+    newest: "New products",
+    whatYouGet: "Your download link appears right after payment. You can download again from the same page.",
+    secure: "Payment confirmed through QPay",
+    footerText: "A shop for digital products made in Mongolia.",
+    contact: "Contact",
+    rights: "All rights reserved.",
   },
 } as const;
 
-export type Dict = (typeof dict)["mn"];
+type Widen<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly Widen<U>[] : { [K in keyof T]: Widen<T[K]> };
+export type Dict = Widen<(typeof dict)["mn"]>;
 
 export async function getLang(): Promise<Lang> {
   const c = (await cookies()).get("lang")?.value;
