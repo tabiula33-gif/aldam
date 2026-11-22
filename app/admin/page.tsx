@@ -85,6 +85,7 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
 
   if (!(await isAdmin())) {
     return (
+      <div className="wrap page">
       <form action={login} className="panel" style={{ maxWidth: 360, margin: "0 auto" }}>
         <h1 style={{ fontSize: "1.3rem" }}>Admin</h1>
         <label htmlFor="password">Password</label>
@@ -92,6 +93,7 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
         {err && <p className="error">Wrong password</p>}
         <button className="btn full">Log in</button>
       </form>
+      </div>
     );
   }
 
@@ -103,7 +105,7 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
   const revenue = (orders as Order[]).reduce((s, o) => s + o.amount_mnt, 0);
 
   return (
-    <>
+    <div className="wrap page">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h1>Admin</h1>
         <form action={logout}><button className="btn ghost">Log out</button></form>
@@ -179,6 +181,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

@@ -74,7 +74,7 @@ export default function OrderStatus(p: Props) {
           <button className="btn full" onClick={simulate}>{p.labels.simulate}</button>
         </>
       )}
-      <p className="muted" style={{ textAlign: "center" }}>{p.labels.waiting}</p>
+      <p className="muted" style={{ marginTop: 16 }}><span className="spinner" />{p.labels.waiting}</p>
     </>
   );
 }

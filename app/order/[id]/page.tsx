@@ -16,9 +16,9 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const product = data as Product;
 
   return (
-    <div style={{ maxWidth: 480, margin: "0 auto" }}>
+    <div className="wrap page"><div className="order-wrap">
       <div className="panel">
-        <h1 style={{ fontSize: "1.3rem" }}>{pick(lang, product.title_mn, product.title_en)}</h1>
+        <h1>{pick(lang, product.title_mn, product.title_en)}</h1>
         <p className="price">{formatMnt(order.amount_mnt)}</p>
         <OrderStatus
           orderId={order.id}
@@ -39,6 +39,6 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
           }}
         />
       </div>
-    </div>
+    </div></div>
   );
 }
