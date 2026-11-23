@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Montserrat, Manrope, Noto_Sans_Mongolian } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { t } from "@/lib/i18n";
 import { KeyBorder, Ulzii } from "./ornaments";
@@ -11,6 +12,8 @@ import { IconSearch } from "./components/icons";
 const heading = Montserrat({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-heading", display: "swap" });
 const body = Manrope({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-body", display: "swap" });
 const mongol = Noto_Sans_Mongolian({ subsets: ["mongolian"], weight: "400", variable: "--font-mong", display: "swap" });
+// Classical Mongolian Dashitseden by Bolorsoft (free for personal and commercial use), see app/fonts/README.md
+const mongolText = localFont({ src: "./fonts/Dashitseden.woff2", variable: "--font-mong-text", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Aldam",
@@ -23,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const facebook = process.env.NEXT_PUBLIC_FACEBOOK_URL;
   const instagram = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
   return (
-    <html lang={lang === "mong" ? "mn-Mong" : lang} className={`${heading.variable} ${body.variable} ${mongol.variable}${lang === "mong" ? " mong" : ""}`}>
+    <html lang={lang === "mong" ? "mn-Mong" : lang} className={`${heading.variable} ${body.variable} ${mongol.variable} ${mongolText.variable}${lang === "mong" ? " mong" : ""}`}>
       <body>
         <header className="site">
           <div className="wrap bar">
