@@ -208,6 +208,17 @@ export function formatMnt(n: number): string {
   return new Intl.NumberFormat("en-US").format(n) + "₮";
 }
 
+/** A product's name and description for the current language, and whether they are in vertical script. */
+export function productText(
+  lang: Lang,
+  p: { title_mn: string; title_en: string; description_mn: string; description_en: string; title_mong?: string | null; description_mong?: string | null },
+) {
+  if (lang === "mong" && p.title_mong) {
+    return { title: p.title_mong, desc: p.description_mong || p.description_mn, script: true, descScript: !!p.description_mong };
+  }
+  return { title: pick(lang, p.title_mn, p.title_en), desc: pick(lang, p.description_mn, p.description_en), script: false, descScript: false };
+}
+
 export function pick(lang: Lang, mn: string, en: string): string {
   // Product data has Cyrillic and English only; the Mongol bichig version shows the Cyrillic text.
   return lang === "en" && en ? en : mn;

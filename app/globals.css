@@ -335,3 +335,54 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
 .mong footer.site a.vt { margin: 0; max-height: 120px; }
 .mong footer.site .copy { display: flex; gap: 8px; align-items: flex-start; }
 .mong footer.site .copy .vt { max-height: 160px; }
+
+/* ---------- Mongol bichig: vertical-first layout ----------
+   A rail on the left holds the logo, categories, search and language,
+   all read top-to-bottom. Script text is larger and more open. */
+.mong { --rail: 92px; }
+.mong .vt { font-size: 1.12em; line-height: 1.75; }
+.mong h1.vt { font-size: 1.9rem; }
+.mong h2.vt { font-size: 1.45rem; }
+.rail { position: fixed; inset: 0 auto 0 0; width: var(--rail); background: var(--bg); border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 16px 0; z-index: 30; overflow-y: auto; scrollbar-width: none; }
+.rail-brand { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; color: var(--blue); font-family: var(--font-h); font-weight: 700; font-size: 0.8rem; }
+.rail-brand svg { color: var(--red); }
+.snav { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; padding: 6px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.snav-item { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 68px; padding: 10px 0 14px; border-radius: 16px; text-decoration: none; color: var(--text); }
+.snav-item:hover { background: var(--page); }
+.snav-item.on { background: var(--blue-soft); color: var(--blue); }
+.snav-item .vt { max-height: 150px; }
+.snav-item.c-pdf .chip-ic { background: var(--gold-soft); color: var(--gold); }
+.snav-item.c-planner .chip-ic { background: var(--red-soft); color: var(--red); }
+.snav-item.c-course .chip-ic { background: var(--green-soft); color: var(--green); }
+.rail-lang { flex-direction: column; margin-top: auto; border-radius: 18px; }
+.rail-lang a { text-align: center; }
+.mong .shell { margin-left: var(--rail); }
+.shop-search { max-width: 420px; margin: 0 0 18px; }
+
+/* product names and descriptions written in Mongol bichig */
+.mong .pcard-name.vt { display: block; -webkit-line-clamp: unset; height: 150px; overflow: hidden; font-weight: 400; }
+.mong .pcard:has(.pcard-name.vt) { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto 1fr; column-gap: 10px; }
+.mong .pcard:has(.pcard-name.vt) .pcard-img { grid-column: 1 / -1; }
+.mong .pcard:has(.pcard-name.vt) .pcard-name { grid-row: 2 / 4; }
+.mong .pcard:has(.pcard-name.vt) .pcard-price { flex-direction: column; align-items: flex-start; gap: 2px; }
+.mong .pd-info:has(h1.vt) { display: grid; grid-template-columns: auto 1fr; column-gap: 22px; align-items: start; }
+.mong .pd-info h1.vt { grid-row: 1 / 5; max-height: 460px; margin: 0; }
+.mong .desc-vt { height: 380px; max-width: 100%; overflow-x: auto; white-space: pre-line; }
+.mong .pd-desc:has(.desc-vt) { max-width: none; display: flex; gap: 18px; align-items: flex-start; }
+.mong .pd-desc:has(.desc-vt) h2 { float: none; }
+.mong .crumbs .vt { font-size: 1em; }
+.script-input { font-family: var(--font-mong-text), var(--font-mong), var(--font-b); }
+
+@media (max-width: 700px) {
+  .mong { --rail: 64px; }
+  .rail { gap: 10px; padding: 10px 0; }
+  .rail-brand span { display: none; }
+  .snav-item { width: 52px; padding: 8px 0 12px; }
+  .snav-item .vt { max-height: 120px; font-size: 1em; }
+  .rail-lang a { padding: 4px 6px; font-size: 0.7rem; }
+  .mong .wrap { padding: 0 12px; }
+  .mong .banners { margin: 0 -12px 28px; padding: 0 12px; }
+  .mong .prow-track { margin: 0 -12px 0 0; padding: 0 12px 0 0; grid-auto-columns: 62%; }
+  .mong .pd-info:has(h1.vt) { grid-template-columns: 1fr; }
+  .mong .pd-info h1.vt { grid-row: auto; max-height: 300px; margin-bottom: 12px; }
+}

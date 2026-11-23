@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { db, type Product } from "@/lib/db";
-import { formatMnt, pick, t } from "@/lib/i18n";
+import { formatMnt, productText, t } from "@/lib/i18n";
 import { getOrder, refreshOrder } from "@/lib/orders";
 import OrderStatus from "./status";
 
@@ -18,7 +18,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   return (
     <div className="wrap page"><div className="order-wrap">
       <div className="panel">
-        <h1>{pick(lang, product.title_mn, product.title_en)}</h1>
+        <h1 className={productText(lang, product).script ? "vt" : ""}>{productText(lang, product).title}</h1>
         <p className="price">{formatMnt(order.amount_mnt)}</p>
         <OrderStatus
           orderId={order.id}

@@ -24,6 +24,8 @@ export type Product = {
   title_en: string;
   description_mn: string;
   description_en: string;
+  title_mong?: string | null;
+  description_mong?: string | null;
   price_mnt: number;
   compare_at_mnt?: number | null; // optional "was" price for sales
   cover_path: string | null;
