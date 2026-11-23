@@ -47,10 +47,11 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--text); overflow-x: clip; }
-body { font-family: var(--font-b); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-b); font-synthesis-weight: none; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
 img { max-width: 100%; }
-h1, h2, h3, h4 { font-family: var(--font-h); line-height: 1.25; letter-spacing: -0.01em; }
+h1, h2, h3, h4 { font-family: var(--font-h); font-weight: 500; line-height: 1.25; letter-spacing: 0; }
+strong, b, .btn, .price, .brand { font-family: var(--font-h); }
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
 .muted { color: var(--muted); }
 .page { padding-top: 18px; }

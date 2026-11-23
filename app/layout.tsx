@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Montserrat, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { t } from "@/lib/i18n";
 import { KeyBorder, Ulzii } from "./ornaments";
 import CategoryChips from "./components/CategoryChips";
 import { IconSearch } from "./components/icons";
 
-const heading = Montserrat({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-heading", display: "swap" });
-const body = Manrope({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-body", display: "swap" });
+// Mongolian fonts by mongoluseg (SIL Open Font License 1.1), see app/fonts/README.md
+const heading = localFont({ src: "./fonts/Torgon-Medium.woff2", weight: "500", variable: "--font-heading", display: "swap" });
+const body = localFont({ src: "./fonts/Gerege-Medium.woff2", weight: "500", variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Aldam",
