@@ -25,6 +25,7 @@ export type Product = {
   description_mn: string;
   description_en: string;
   price_mnt: number;
+  compare_at_mnt?: number | null; // optional "was" price for sales
   cover_path: string | null;
   file_path: string | null;
   active: boolean;
@@ -66,4 +67,23 @@ export async function productBySlug(slug: string): Promise<Product | null> {
   const { data, error } = await db().from("products").select("*").eq("slug", slug).maybeSingle();
   if (error) throw error;
   return data as Product | null;
+}
+
+/** Product ids ordered by number of paid orders (most sold first). */
+export async function bestSellerIds(limit = 500): Promise<string[]> {
+  const { data, error } = await db()
+    .from("orders")
+    .select("product_id")
+    .eq("status", "paid")
+    .order("paid_at", { ascending: false })
+    .limit(limit);
+  if (error) return [];
+  const counts = new Map<string, number>();
+  for (const r of data as { product_id: string }[]) counts.set(r.product_id, (counts.get(r.product_id) ?? 0) + 1);
+  return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => id);
+}
+
+export function discountPercent(p: Product): number | null {
+  if (!p.compare_at_mnt || p.compare_at_mnt <= p.price_mnt) return null;
+  return Math.round((1 - p.price_mnt / p.compare_at_mnt) * 100);
 }

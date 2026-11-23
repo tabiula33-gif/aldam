@@ -22,6 +22,7 @@ create table if not exists products (
   description_mn text not null default '',
   description_en text not null default '',
   price_mnt integer not null check (price_mnt > 0),
+  compare_at_mnt integer,   -- optional "was" price, shown crossed out
   cover_path text,          -- path in the public "covers" bucket
   file_path text,           -- path in the private "files" bucket
   active boolean not null default true,

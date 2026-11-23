@@ -1,77 +1,67 @@
 import Link from "next/link";
-import { activeProducts, coverUrl, type Product } from "@/lib/db";
-import { formatMnt, pick, t, type Dict, type Lang } from "@/lib/i18n";
-import { KeyBorder, Ulzii } from "./ornaments";
+import { activeProducts, bestSellerIds, coverUrl, type Product } from "@/lib/db";
+import { t } from "@/lib/i18n";
+import ProductCard from "./components/ProductCard";
+import ProductRow from "./components/ProductRow";
+import { IconArrow, kindIcon } from "./components/icons";
 
 export const dynamic = "force-dynamic";
 
-const KINDS = ["pdf", "planner", "course"] as const;
+const KINDS = ["planner", "pdf", "course"] as const;
 
-function ProductCard({ p, lang, d }: { p: Product; lang: Lang; d: Dict }) {
-  const cover = coverUrl(p.cover_path);
-  return (
-    <Link href={`/p/${p.slug}`} className="card">
-      {cover ? (
-        <img className="cover" src={cover} alt="" loading="lazy" />
-      ) : (
-        <div className={`cover placeholder ${p.kind}`}><Ulzii size={56} /></div>
-      )}
-      <div className="body">
-        <span className={`tag ${p.kind}`}>{d.kind[p.kind]}</span>
-        <h3>{pick(lang, p.title_mn, p.title_en)}</h3>
-        <span className="price">{formatMnt(p.price_mnt)}</span>
-      </div>
-    </Link>
-  );
-}
-
-const perkIcons = ["₮", "↓", "★"];
-
-export default async function Home({ searchParams }: { searchParams: Promise<{ kind?: string }> }) {
-  const { kind } = await searchParams;
+export default async function Home() {
   const { lang, d } = await t();
-  const all = await activeProducts();
-  const filter = KINDS.find((k) => k === kind);
-  const products = filter ? all.filter((p) => p.kind === filter) : all;
+  const [all, ranked] = await Promise.all([activeProducts(), bestSellerIds()]);
+  const byId = new Map(all.map((p) => [p.id, p]));
+  const best = ranked.map((id) => byId.get(id)).filter((p): p is Product => !!p);
+  // Until there are sales, fill "best sellers" with the newest products.
+  for (const p of all) if (best.length < 10 && !best.includes(p)) best.push(p);
+
+  const firstCover = (k: Product["kind"]) => coverUrl(all.find((p) => p.kind === k && p.cover_path)?.cover_path ?? null);
+  const card = (p: Product) => <ProductCard key={p.id} p={p} lang={lang} d={d} />;
+
+  const banners = [
+    { cls: "b-main", tag: d.b1Tag, title: d.b1Title, text: d.b1Text, href: "/shop?kind=planner", img: firstCover("planner"), Icon: kindIcon.planner },
+    { cls: "b-red", title: d.b2Title, text: d.b2Text, href: "/shop?kind=course", img: firstCover("course"), Icon: kindIcon.course },
+    { cls: "b-gold", title: d.b3Title, text: d.b3Text, href: "/shop?kind=pdf", img: firstCover("pdf"), Icon: kindIcon.pdf },
+  ];
 
   return (
-    <>
-      <section className="hero">
-        <Ulzii size={420} className="ulzii-bg" />
-        <div className="wrap">
-          <h1>{d.heroTitle}</h1>
-          <p>{d.heroText}</p>
-          <a href="#products" className="btn gold">{d.browse}</a>
-        </div>
-        <KeyBorder />
+    <div className="wrap home">
+      <section className="banners">
+        {banners.map((b) => (
+          <Link key={b.cls} href={b.href} className={`banner ${b.cls}`}>
+            <div className="banner-text">
+              {b.tag && <span className="banner-tag">{b.tag}</span>}
+              <h2>{b.title}</h2>
+              <p>{b.text}</p>
+              <span className="banner-go" aria-hidden="true"><IconArrow size={18} /></span>
+            </div>
+            <div className="banner-art">
+              {b.img ? <img src={b.img} alt="" /> : <b.Icon size={b.cls === "b-main" ? 120 : 72} />}
+            </div>
+          </Link>
+        ))}
       </section>
 
-      <div className="wrap">
-        <div className="perks">
-          {d.perks.map((perk, i) => (
-            <div className="perk" key={perk}>
-              <span className="dot">{perkIcons[i]}</span>
-              {perk}
-            </div>
-          ))}
-        </div>
-
-        <div className="section-head" id="products">
-          <h2>{filter ? d.kind[filter] : d.newest}</h2>
-          <span className="muted">{products.length}</span>
-        </div>
-
-        {products.length === 0 ? (
-          <div className="empty">
-            <Ulzii size={40} />
-            <p>{d.empty}</p>
-          </div>
-        ) : (
-          <div className="grid">
-            {products.map((p) => <ProductCard key={p.id} p={p} lang={lang} d={d} />)}
-          </div>
-        )}
-      </div>
-    </>
+      {all.length === 0 ? (
+        <p className="empty">{d.empty}</p>
+      ) : (
+        <>
+          <ProductRow title={d.bestSellers} viewAllHref="/shop" viewAllLabel={d.viewAll} count={all.length}>
+            {best.slice(0, 10).map(card)}
+          </ProductRow>
+          {KINDS.map((k) => {
+            const items = all.filter((p) => p.kind === k);
+            if (items.length === 0) return null;
+            return (
+              <ProductRow key={k} title={d.kind[k]} viewAllHref={`/shop?kind=${k}`} viewAllLabel={d.viewAll} count={items.length}>
+                {items.slice(0, 12).map(card)}
+              </ProductRow>
+            );
+          })}
+        </>
+      )}
+    </div>
   );
 }

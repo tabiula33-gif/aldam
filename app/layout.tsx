@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Inter, Lora } from "next/font/google";
+import { Montserrat, Manrope } from "next/font/google";
 import "./globals.css";
 import { t } from "@/lib/i18n";
 import { KeyBorder, Ulzii } from "./ornaments";
-import Nav from "./nav";
+import CategoryChips from "./components/CategoryChips";
+import { IconSearch } from "./components/icons";
 
-const inter = Inter({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-inter", display: "swap" });
-const lora = Lora({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-lora", display: "swap" });
+const heading = Montserrat({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-heading", display: "swap" });
+const body = Manrope({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Aldam",
@@ -21,16 +22,24 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const facebook = process.env.NEXT_PUBLIC_FACEBOOK_URL;
   const instagram = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
   return (
-    <html lang={lang} className={`${inter.variable} ${lora.variable}`}>
+    <html lang={lang} className={`${heading.variable} ${body.variable}`}>
       <body>
         <header className="site">
-          <div className="wrap">
+          <div className="wrap bar">
             <Link href="/" className="brand"><Ulzii size={26} /> Aldam</Link>
-            <Suspense fallback={<div className="nav" />}><Nav labels={{ all: d.all, ...d.kind }} /></Suspense>
+            <form action="/shop" className="search" role="search">
+              <IconSearch size={17} />
+              <input name="q" type="search" placeholder={d.search} aria-label={d.search} />
+            </form>
             <nav className="lang" aria-label="Language">
               <a href="/api/lang?to=mn" className={lang === "mn" ? "on" : ""}>МН</a>
               <a href="/api/lang?to=en" className={lang === "en" ? "on" : ""}>EN</a>
             </nav>
+          </div>
+          <div className="wrap">
+            <Suspense fallback={<div className="chips" />}>
+              <CategoryChips labels={{ all: d.any, ...d.kind }} />
+            </Suspense>
           </div>
         </header>
         <main>{children}</main>
@@ -40,6 +49,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <div>
               <Link href="/" className="brand"><Ulzii size={24} /> Aldam</Link>
               <p>{d.footerText}</p>
+            </div>
+            <div>
+              <h4>{d.shop}</h4>
+              <Link href="/shop?kind=pdf">{d.kind.pdf}</Link>
+              <Link href="/shop?kind=planner">{d.kind.planner}</Link>
+              <Link href="/shop?kind=course">{d.kind.course}</Link>
             </div>
             {(email || facebook || instagram) && (
               <div>
