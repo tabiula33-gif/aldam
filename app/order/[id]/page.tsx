@@ -19,7 +19,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
     <div className="wrap page"><div className="order-wrap">
       <div className="panel">
         <h1 className={productText(lang, product).script ? "vt" : ""}>{productText(lang, product).title}</h1>
-        <p className="price">{formatMnt(order.amount_mnt)}</p>
+        <p className="price">{formatMnt(order.amount_mnt, lang)}</p>
         <OrderStatus
           orderId={order.id}
           initialStatus={order.status}

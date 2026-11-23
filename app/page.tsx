@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { activeProducts, bestSellerIds, coverUrl, type Product } from "@/lib/db";
-import { t } from "@/lib/i18n";
+import { num, t } from "@/lib/i18n";
 import ProductCard from "./components/ProductCard";
 import ProductRow from "./components/ProductRow";
 import { IconArrow, kindIcon } from "./components/icons";
@@ -50,14 +50,14 @@ export default async function Home() {
         <p className="empty"><span className="vt">{d.empty}</span></p>
       ) : (
         <>
-          <ProductRow title={d.bestSellers} viewAllHref="/shop" viewAllLabel={d.viewAll} count={all.length}>
+          <ProductRow title={d.bestSellers} viewAllHref="/shop" viewAllLabel={d.viewAll} count={num(lang, all.length)}>
             {best.slice(0, 10).map(card)}
           </ProductRow>
           {KINDS.map((k) => {
             const items = all.filter((p) => p.kind === k);
             if (items.length === 0) return null;
             return (
-              <ProductRow key={k} title={d.kind[k]} viewAllHref={`/shop?kind=${k}`} viewAllLabel={d.viewAll} count={items.length}>
+              <ProductRow key={k} title={d.kind[k]} viewAllHref={`/shop?kind=${k}`} viewAllLabel={d.viewAll} count={num(lang, items.length)}>
                 {items.slice(0, 12).map(card)}
               </ProductRow>
             );

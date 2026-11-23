@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { activeProducts, discountPercent, type Product } from "@/lib/db";
-import { t } from "@/lib/i18n";
+import { t, num } from "@/lib/i18n";
 import ProductCard from "../components/ProductCard";
 import { IconSearch } from "../components/icons";
 
@@ -78,7 +78,7 @@ export default async function Shop({ searchParams }: { searchParams: Promise<SP>
         <section>
           <div className="shop-head">
             <h1 className={q ? "" : "vt"}>{q ? `“${sp.q}”` : kind ? d.kind[kind] : d.shop}</h1>
-            <span className="muted">{items.length} <span className="vt">{d.results}</span></span>
+            <span className="muted">{num(lang, items.length)} <span className="vt">{d.results}</span></span>
           </div>
           {items.length === 0 ? (
             <p className="empty"><span className="vt">{d.noResults}</span></p>

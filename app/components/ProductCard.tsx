@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { coverUrl, discountPercent, type Product } from "@/lib/db";
-import { formatMnt, productText, type Dict, type Lang } from "@/lib/i18n";
+import { formatMnt, num, productText, type Dict, type Lang } from "@/lib/i18n";
 import { kindIcon } from "./icons";
 
 export default function ProductCard({ p, lang, d }: { p: Product; lang: Lang; d: Dict }) {
@@ -12,12 +12,12 @@ export default function ProductCard({ p, lang, d }: { p: Product; lang: Lang; d:
     <Link href={`/p/${p.slug}`} className="pcard">
       <div className={`pcard-img tint-${p.kind}`}>
         {cover ? <img src={cover} alt="" loading="lazy" /> : <span className="pcard-icon"><Icon size={44} /></span>}
-        {off && <span className="badge-off">−{off}%</span>}
+        {off && <span className="badge-off">−{num(lang, off)}%</span>}
       </div>
       <div className={`pcard-name${text.script ? " vt" : ""}`}>{text.title}</div>
       <div className="pcard-price">
-        <strong>{formatMnt(p.price_mnt)}</strong>
-        {off && <s>{formatMnt(p.compare_at_mnt!)}</s>}
+        <strong>{formatMnt(p.price_mnt, lang)}</strong>
+        {off && <s>{formatMnt(p.compare_at_mnt!, lang)}</s>}
       </div>
       <div className={`pcard-kind k-${p.kind}`}><span className="vt">{d.kind[p.kind]}</span></div>
     </Link>

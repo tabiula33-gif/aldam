@@ -263,6 +263,8 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
 /* ---------- Mongol bichig (traditional script) version ----------
    Interface text marked .vt is written top-to-bottom, columns left-to-right.
    Product names and descriptions stay in Cyrillic and stay horizontal. */
+/* Manrope/Montserrat have no Mongol digits, so fall back to the script fonts for those */
+.mong { --font-b: var(--font-body), var(--font-mong-text), var(--font-mong), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --font-h: var(--font-heading), var(--font-b); }
 .mong body { font-family: var(--font-b); }
 .lang a.script { font-family: var(--font-mong), var(--font-b); }
 /* small Mongol bichig text uses Dashitseden; headings keep Noto Sans Mongolian */

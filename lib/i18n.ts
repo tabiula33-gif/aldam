@@ -170,7 +170,7 @@ const dict = {
     aboutLocal: "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢ ᠶᠢᠨ ᠪᠦᠲᠦᠭᠡᠯ",
     b1Tag: "ᠰᠢᠨ᠎ᠡ",
     b1Title: "ᠰᠢᠨ᠎ᠡ ᠣᠨ ᠢ ᠲᠥᠯᠥᠪᠯᠡᠭᠡ ᠲᠡᠢ ᠡᠬᠢᠯᠡ",
-    b1Text: "2027 ᠣᠨ ᠤ ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ᠂ ᠬᠤᠸᠠᠩᠯᠢ",
+    b1Text: "᠒᠐᠒᠗ ᠣᠨ ᠤ ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ᠂ ᠬᠤᠸᠠᠩᠯᠢ",
     b2Title: "ᠰᠤᠷᠭᠠᠯᠲᠠ ᠨᠤᠭᠤᠳ",
     b2Text: "ᠭᠡᠷ ᠡᠴᠡ ᠪᠡᠨ ᠰᠢᠨ᠎ᠡ ᠤᠷ ᠴᠢᠳᠠᠪᠤᠷᠢ ᠡᠵᠡᠮᠰᠢ",
     b3Title: "PDF ᠭᠠᠷ ᠤᠨ ᠠᠪᠤᠯᠭ᠎ᠠ",
@@ -186,7 +186,7 @@ const dict = {
     contact: "ᠬᠣᠯᠪᠣᠭ᠎ᠠ ᠪᠠᠷᠢᠬᠤ",
     rights: "ᠪᠦᠬᠦ ᠡᠷᠬᠡ ᠬᠠᠤᠯᠢ ᠪᠠᠷ ᠬᠠᠮᠠᠭᠠᠯᠠᠭᠳᠠᠭᠰᠠᠨ᠃",
     kind: { pdf: "PDF", planner: "ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ", course: "ᠰᠤᠷᠭᠠᠯᠲᠠ" },
-    priceRanges: ["10,000₮ ᠬᠦᠷᠲᠡᠯ᠎ᠡ", "10,000–30,000₮", "30,000₮ ᠡᠴᠡ ᠳᠡᠭᠡᠭᠰᠢ"],
+    priceRanges: ["᠑᠐,᠐᠐᠐₮ ᠬᠦᠷᠲᠡᠯ᠎ᠡ", "᠑᠐,᠐᠐᠐–᠓᠐,᠐᠐᠐₮", "᠓᠐,᠐᠐᠐₮ ᠡᠴᠡ ᠳᠡᠭᠡᠭᠰᠢ"],
     perks: ["QPay ᠢᠶᠠᠷ ᠠᠶᠤᠯᠭᠦᠢ ᠲᠥᠯᠥᠨ᠎ᠡ", "ᠰᠢᠭᠤᠳ ᠲᠠᠲᠠᠵᠤ ᠠᠪᠤᠨ᠎ᠠ", "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢ ᠶᠢᠨ ᠪᠦᠲᠦᠭᠡᠯ"],
   },
 } as const;
@@ -204,8 +204,14 @@ export async function t(): Promise<{ lang: Lang; d: Dict }> {
   return { lang, d: dict[lang] as Dict };
 }
 
-export function formatMnt(n: number): string {
-  return new Intl.NumberFormat("en-US").format(n) + "₮";
+/** Writes numbers with Mongol bichig digits (᠐–᠙) in script mode, Western digits otherwise. */
+export function num(lang: Lang | undefined, n: number | string): string {
+  const s = String(n);
+  return lang === "mong" ? s.replace(/[0-9]/g, (c) => String.fromCharCode(0x1810 + Number(c))) : s;
+}
+
+export function formatMnt(n: number, lang?: Lang): string {
+  return num(lang, new Intl.NumberFormat("en-US").format(n)) + "₮";
 }
 
 /** A product's name and description for the current language, and whether they are in vertical script. */
