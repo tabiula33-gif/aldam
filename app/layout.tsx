@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Montserrat, Manrope } from "next/font/google";
+import { Montserrat, Manrope, Noto_Sans_Mongolian } from "next/font/google";
 import "./globals.css";
 import { t } from "@/lib/i18n";
 import { KeyBorder, Ulzii } from "./ornaments";
@@ -10,6 +10,7 @@ import { IconSearch } from "./components/icons";
 
 const heading = Montserrat({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-heading", display: "swap" });
 const body = Manrope({ subsets: ["latin", "cyrillic", "cyrillic-ext"], variable: "--font-body", display: "swap" });
+const mongol = Noto_Sans_Mongolian({ subsets: ["mongolian"], weight: "400", variable: "--font-mong", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Aldam",
@@ -22,17 +23,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const facebook = process.env.NEXT_PUBLIC_FACEBOOK_URL;
   const instagram = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
   return (
-    <html lang={lang} className={`${heading.variable} ${body.variable}`}>
+    <html lang={lang === "mong" ? "mn-Mong" : lang} className={`${heading.variable} ${body.variable} ${mongol.variable}${lang === "mong" ? " mong" : ""}`}>
       <body>
         <header className="site">
           <div className="wrap bar">
             <Link href="/" className="brand"><Ulzii size={26} /> Aldam</Link>
             <form action="/shop" className="search" role="search">
               <IconSearch size={17} />
-              <input name="q" type="search" placeholder={d.search} aria-label={d.search} />
+              <input name="q" type="search" placeholder={lang === "mong" ? "" : d.search} aria-label={d.search} />
             </form>
             <nav className="lang" aria-label="Language">
               <a href="/api/lang?to=mn" className={lang === "mn" ? "on" : ""}>МН</a>
+              <a href="/api/lang?to=mong" className={`script ${lang === "mong" ? "on" : ""}`} title="Монгол бичиг">ᠮᠣᠩ</a>
               <a href="/api/lang?to=en" className={lang === "en" ? "on" : ""}>EN</a>
             </nav>
           </div>
@@ -48,23 +50,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="wrap">
             <div>
               <Link href="/" className="brand"><Ulzii size={24} /> Aldam</Link>
-              <p>{d.footerText}</p>
+              <p className="vt">{d.footerText}</p>
             </div>
             <div>
-              <h4>{d.shop}</h4>
-              <Link href="/shop?kind=pdf">{d.kind.pdf}</Link>
-              <Link href="/shop?kind=planner">{d.kind.planner}</Link>
-              <Link href="/shop?kind=course">{d.kind.course}</Link>
+              <h4 className="vt">{d.shop}</h4>
+              <Link href="/shop?kind=pdf" className="vt">{d.kind.pdf}</Link>
+              <Link href="/shop?kind=planner" className="vt">{d.kind.planner}</Link>
+              <Link href="/shop?kind=course" className="vt">{d.kind.course}</Link>
             </div>
             {(email || facebook || instagram) && (
               <div>
-                <h4>{d.contact}</h4>
+                <h4 className="vt">{d.contact}</h4>
                 {email && <a href={`mailto:${email}`}>{email}</a>}
                 {facebook && <a href={facebook}>Facebook</a>}
                 {instagram && <a href={instagram}>Instagram</a>}
               </div>
             )}
-            <div className="copy">© {new Date().getFullYear()} Aldam. {d.rights}</div>
+            <div className="copy">© {new Date().getFullYear()} Aldam. <span className="vt">{d.rights}</span></div>
           </div>
         </footer>
       </body>

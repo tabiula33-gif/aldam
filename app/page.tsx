@@ -32,9 +32,9 @@ export default async function Home() {
         {banners.map((b) => (
           <Link key={b.cls} href={b.href} className={`banner ${b.cls}`}>
             <div className="banner-text">
-              {b.tag && <span className="banner-tag">{b.tag}</span>}
-              <h2>{b.title}</h2>
-              <p>{b.text}</p>
+              {b.tag && <span className="banner-tag vt">{b.tag}</span>}
+              <h2 className="vt">{b.title}</h2>
+              <p className="vt">{b.text}</p>
               <span className="banner-go" aria-hidden="true"><IconArrow size={18} /></span>
             </div>
             <div className="banner-art">
@@ -45,7 +45,7 @@ export default async function Home() {
       </section>
 
       {all.length === 0 ? (
-        <p className="empty">{d.empty}</p>
+        <p className="empty"><span className="vt">{d.empty}</span></p>
       ) : (
         <>
           <ProductRow title={d.bestSellers} viewAllHref="/shop" viewAllLabel={d.viewAll} count={all.length}>

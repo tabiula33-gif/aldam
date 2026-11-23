@@ -20,7 +20,7 @@ export default function CategoryChips({ labels }: { labels: Labels }) {
       {items.map(({ href, label, k, Icon }) => (
         <Link key={href} href={href} className={`chip ${k ? `c-${k}` : ""} ${path === "/shop" && kind === k ? "on" : ""}`}>
           <span className="chip-ic"><Icon size={15} /></span>
-          {label}
+          <span className="vt">{label}</span>
         </Link>
       ))}
     </nav>

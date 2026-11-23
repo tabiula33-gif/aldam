@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const to = url.searchParams.get("to") === "en" ? "en" : "mn";
+  const req2 = url.searchParams.get("to");
+  const to = req2 === "en" || req2 === "mong" ? req2 : "mn";
   // Only return to a page on this site.
   let path = "/";
   const ref = req.headers.get("referer");

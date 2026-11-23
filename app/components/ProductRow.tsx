@@ -14,11 +14,11 @@ export default function ProductRow({
   return (
     <section className="prow">
       <div className="prow-head">
-        <h2>{title}</h2>
+        <h2 className="vt">{title}</h2>
         <div className="prow-actions">
           {viewAllHref && (
             <Link href={viewAllHref} className="pill">
-              {viewAllLabel}{typeof count === "number" ? ` (${count})` : ""} <IconArrow size={14} />
+              <span className="vt">{viewAllLabel}</span>{typeof count === "number" ? ` (${count})` : ""} <IconArrow size={14} />
             </Link>
           )}
           <button className="round" onClick={() => scroll(-1)} aria-label="Previous"><IconArrow size={16} dir="left" /></button>

@@ -42,7 +42,7 @@ export default async function ProductPage({
   return (
     <div className="wrap page">
       <nav className="crumbs">
-        <Link href="/">{d.home}</Link> / <Link href={`/shop?kind=${p.kind}`}>{d.kind[p.kind]}</Link> / <span>{title}</span>
+        <Link href="/" className="vt">{d.home}</Link> / <Link href={`/shop?kind=${p.kind}`} className="vt">{d.kind[p.kind]}</Link> / <span>{title}</span>
       </nav>
       <div className="pd">
         <div className={`pd-img tint-${p.kind}`}>
@@ -53,27 +53,27 @@ export default async function ProductPage({
           <h1>{title}</h1>
           <div className="pd-price">
             <strong>{formatMnt(p.price_mnt)}</strong>
-            {off && <><s>{formatMnt(p.compare_at_mnt!)}</s><span className="save">{off}% {d.off}</span></>}
+            {off && <><s>{formatMnt(p.compare_at_mnt!)}</s><span className="save">{off}% <span className="vt">{d.off}</span></span></>}
           </div>
           <form action={buy} className="buybox">
             <input type="hidden" name="slug" value={p.slug} />
-            <label htmlFor="email">{d.email}</label>
+            <label htmlFor="email" className="vt">{d.email}</label>
             <input id="email" name="email" type="email" required autoComplete="email" placeholder="name@example.com" />
-            <p className="hint">{d.emailHint}</p>
+            <p className="hint vt">{d.emailHint}</p>
             {err === "email" && <p className="error">✕ {d.email}</p>}
-            <button className="btn full" type="submit">{d.buy}</button>
+            <button className="btn full" type="submit"><span className="vt">{d.buy}</span></button>
           </form>
           <ul className="about">
-            <li><span className="ab-ic"><IconBolt /></span>{d.aboutInstant}</li>
-            <li><span className="ab-ic"><IconShield /></span>{d.aboutQpay}</li>
-            <li><span className="ab-ic"><IconHeart /></span>{d.aboutLocal}</li>
+            <li><span className="ab-ic"><IconBolt /></span><span className="vt">{d.aboutInstant}</span></li>
+            <li><span className="ab-ic"><IconShield /></span><span className="vt">{d.aboutQpay}</span></li>
+            <li><span className="ab-ic"><IconHeart /></span><span className="vt">{d.aboutLocal}</span></li>
           </ul>
         </div>
       </div>
 
       {desc && (
         <section className="pd-desc">
-          <h2>{d.details}</h2>
+          <h2 className="vt">{d.details}</h2>
           <p>{desc}</p>
         </section>
       )}

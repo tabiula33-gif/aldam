@@ -43,9 +43,9 @@ export default function OrderStatus(p: Props) {
   if (status === "paid" && token) {
     return (
       <>
-        <p className="ok">✓ {p.labels.paid}</p>
-        <a className="btn full" href={`/api/download/${token}`}>{p.labels.download}</a>
-        <p className="notice">{p.labels.keepLink}</p>
+        <p className="ok">✓ <span className="vt">{p.labels.paid}</span></p>
+        <a className="btn full" href={`/api/download/${token}`}><span className="vt">{p.labels.download}</span></a>
+        <p className="notice"><span className="vt">{p.labels.keepLink}</span></p>
       </>
     );
   }
@@ -54,7 +54,7 @@ export default function OrderStatus(p: Props) {
     <>
       {p.provider === "qpay" && p.qrImage && (
         <>
-          <p>{p.labels.payWith}</p>
+          <p><span className="vt">{p.labels.payWith}</span></p>
           <img className="qr" src={`data:image/png;base64,${p.qrImage}`} alt="QPay QR" />
           {p.banks.length > 0 && (
             <div className="banks">
@@ -70,11 +70,11 @@ export default function OrderStatus(p: Props) {
       )}
       {p.provider === "test" && (
         <>
-          <p className="notice">{p.labels.testMode}</p>
-          <button className="btn full" onClick={simulate}>{p.labels.simulate}</button>
+          <p className="notice"><span className="vt">{p.labels.testMode}</span></p>
+          <button className="btn full" onClick={simulate}><span className="vt">{p.labels.simulate}</span></button>
         </>
       )}
-      <p className="muted" style={{ marginTop: 16 }}><span className="spinner" />{p.labels.waiting}</p>
+      <p className="muted" style={{ marginTop: 16 }}><span className="spinner" /><span className="vt">{p.labels.waiting}</span></p>
     </>
   );
 }
