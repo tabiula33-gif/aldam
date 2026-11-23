@@ -264,7 +264,10 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
    Interface text marked .vt is written top-to-bottom, columns left-to-right.
    Product names and descriptions stay in Cyrillic and stay horizontal. */
 .mong body { font-family: var(--font-b); }
-.mong .vt, .lang a.script { font-family: var(--font-mong), var(--font-b); }
+.lang a.script { font-family: var(--font-mong), var(--font-b); }
+/* small Mongol bichig text uses Dashitseden; headings keep Noto Sans Mongolian */
+.mong .vt { font-family: var(--font-mong-text), var(--font-mong), var(--font-b); }
+.mong h1.vt, .mong h2.vt, .mong h4.vt, .mong strong.vt { font-family: var(--font-mong), var(--font-b); }
 .mong .vt { writing-mode: vertical-lr; text-orientation: mixed; line-height: 1.6; letter-spacing: 0; }
 .lang a.script { font-size: 0.85rem; padding-top: 2px; padding-bottom: 2px; }
 .mong header.site { position: static; }
