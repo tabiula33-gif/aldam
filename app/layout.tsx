@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { Montserrat, Manrope, Noto_Sans_Mongolian } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { t } from "@/lib/i18n";
+import { scriptEnabled, t } from "@/lib/i18n";
 import { KeyBorder, Ulzii } from "./ornaments";
 import CategoryChips from "./components/CategoryChips";
 import SideNav from "./components/SideNav";
@@ -51,7 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </form>
             <nav className="lang" aria-label="Language">
               <a href="/api/lang?to=mn" className={lang === "mn" ? "on" : ""}>МН</a>
-              <a href="/api/lang?to=mong" className="script" title="Монгол бичиг">ᠮᠣᠩ</a>
+              {scriptEnabled() && <a href="/api/lang?to=mong" className="script" title="Монгол бичиг">ᠮᠣᠩ</a>}
               <a href="/api/lang?to=en" className={lang === "en" ? "on" : ""}>EN</a>
             </nav>
           </div>

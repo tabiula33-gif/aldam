@@ -194,9 +194,18 @@ const dict = {
 type Widen<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly Widen<U>[] : { [K in keyof T]: Widen<T[K]> };
 export type Dict = Widen<(typeof dict)["mn"]>;
 
+/**
+ * The Mongol bichig version stays hidden until its wording has been proofread.
+ * Set SHOW_MONGOL_SCRIPT=true in Vercel's environment variables to turn it on.
+ */
+export function scriptEnabled(): boolean {
+  return process.env.SHOW_MONGOL_SCRIPT === "true";
+}
+
 export async function getLang(): Promise<Lang> {
   const c = (await cookies()).get("lang")?.value;
-  return c === "en" || c === "mong" ? c : "mn";
+  if (c === "mong") return scriptEnabled() ? "mong" : "mn";
+  return c === "en" ? "en" : "mn";
 }
 
 export async function t(): Promise<{ lang: Lang; d: Dict }> {
