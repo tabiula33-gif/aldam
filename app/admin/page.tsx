@@ -53,6 +53,7 @@ async function addProduct(formData: FormData) {
   const cover_path = await upload("covers", formData.get("cover") as File | null, slug);
   const file_path = await upload("files", formData.get("file") as File | null, slug);
 
+  const compare = Number(formData.get("compare_at_mnt"));
   const { error } = await db().from("products").insert({
     seller_id: seller!.id,
     slug,
@@ -62,6 +63,8 @@ async function addProduct(formData: FormData) {
     description_mn: String(formData.get("description_mn") ?? ""),
     description_en: String(formData.get("description_en") ?? ""),
     price_mnt: price,
+    // Only sent when filled in, so older databases without the column still work.
+    ...(Number.isInteger(compare) && compare > price ? { compare_at_mnt: compare } : {}),
     cover_path,
     file_path,
     active: true,
@@ -133,6 +136,14 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
             </select>
           </div>
           <div><label>Price (₮) *</label><input name="price_mnt" type="number" min="1" step="1" required /></div>
+        </div>
+        <div className="row two">
+          <div>
+            <label>Old price (₮), optional</label>
+            <input name="compare_at_mnt" type="number" min="1" step="1" />
+            <p className="hint">Fill in to show a sale, e.g. old price crossed out and “−30%”.</p>
+          </div>
+          <div />
         </div>
         <div className="row two">
           <div><label>Cover image</label><input name="cover" type="file" accept="image/*" /></div>
