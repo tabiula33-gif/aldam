@@ -7,7 +7,7 @@ import { IconArrow } from "./icons";
 export default function ProductRow({
   title, viewAllHref, viewAllLabel, count, children,
 }: {
-  title: string; viewAllHref?: string; viewAllLabel: string; count?: number; children: React.ReactNode;
+  title: string; viewAllHref?: string; viewAllLabel: string; count?: string; children: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const scroll = (dir: number) => ref.current?.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: "smooth" });
@@ -18,7 +18,7 @@ export default function ProductRow({
         <div className="prow-actions">
           {viewAllHref && (
             <Link href={viewAllHref} className="pill">
-              <span className="vt">{viewAllLabel}</span>{typeof count === "number" ? ` (${count})` : ""} <IconArrow size={14} />
+              <span className="vt">{viewAllLabel}</span>{count ? ` (${count})` : ""} <IconArrow size={14} />
             </Link>
           )}
           <button className="round" onClick={() => scroll(-1)} aria-label="Previous"><IconArrow size={16} dir="left" /></button>

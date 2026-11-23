@@ -62,6 +62,9 @@ async function addProduct(formData: FormData) {
     title_en: String(formData.get("title_en") ?? "").trim(),
     description_mn: String(formData.get("description_mn") ?? ""),
     description_en: String(formData.get("description_en") ?? ""),
+    // Mongol bichig fields are only sent when filled, so older databases still work.
+    ...(String(formData.get("title_mong") ?? "").trim() ? { title_mong: String(formData.get("title_mong")).trim() } : {}),
+    ...(String(formData.get("description_mong") ?? "").trim() ? { description_mong: String(formData.get("description_mong")) } : {}),
     price_mnt: price,
     // Only sent when filled in, so older databases without the column still work.
     ...(Number.isInteger(compare) && compare > price ? { compare_at_mnt: compare } : {}),
@@ -126,6 +129,11 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
           <div><label>Description (Mongolian)</label><textarea name="description_mn" /></div>
           <div><label>Description (English)</label><textarea name="description_en" /></div>
         </div>
+        <div className="row two">
+          <div><label>Title (Mongol bichig), optional</label><input name="title_mong" className="script-input" /></div>
+          <div><label>Description (Mongol bichig), optional</label><textarea name="description_mong" className="script-input" /></div>
+        </div>
+        <p className="hint">Mongol bichig fields need the database update in supabase/migrations/003_mongol_script_text.sql. Leave them empty to show the Cyrillic text instead.</p>
         <div className="row two">
           <div>
             <label>Type</label>

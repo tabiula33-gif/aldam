@@ -170,7 +170,7 @@ const dict = {
     aboutLocal: "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢ ᠶᠢᠨ ᠪᠦᠲᠦᠭᠡᠯ",
     b1Tag: "ᠰᠢᠨ᠎ᠡ",
     b1Title: "ᠰᠢᠨ᠎ᠡ ᠣᠨ ᠢ ᠲᠥᠯᠥᠪᠯᠡᠭᠡ ᠲᠡᠢ ᠡᠬᠢᠯᠡ",
-    b1Text: "2027 ᠣᠨ ᠤ ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ᠂ ᠬᠤᠸᠠᠩᠯᠢ",
+    b1Text: "᠒᠐᠒᠗ ᠣᠨ ᠤ ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ᠂ ᠬᠤᠸᠠᠩᠯᠢ",
     b2Title: "ᠰᠤᠷᠭᠠᠯᠲᠠ ᠨᠤᠭᠤᠳ",
     b2Text: "ᠭᠡᠷ ᠡᠴᠡ ᠪᠡᠨ ᠰᠢᠨ᠎ᠡ ᠤᠷ ᠴᠢᠳᠠᠪᠤᠷᠢ ᠡᠵᠡᠮᠰᠢ",
     b3Title: "PDF ᠭᠠᠷ ᠤᠨ ᠠᠪᠤᠯᠭ᠎ᠠ",
@@ -186,7 +186,7 @@ const dict = {
     contact: "ᠬᠣᠯᠪᠣᠭ᠎ᠠ ᠪᠠᠷᠢᠬᠤ",
     rights: "ᠪᠦᠬᠦ ᠡᠷᠬᠡ ᠬᠠᠤᠯᠢ ᠪᠠᠷ ᠬᠠᠮᠠᠭᠠᠯᠠᠭᠳᠠᠭᠰᠠᠨ᠃",
     kind: { pdf: "PDF", planner: "ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ", course: "ᠰᠤᠷᠭᠠᠯᠲᠠ" },
-    priceRanges: ["10,000₮ ᠬᠦᠷᠲᠡᠯ᠎ᠡ", "10,000–30,000₮", "30,000₮ ᠡᠴᠡ ᠳᠡᠭᠡᠭᠰᠢ"],
+    priceRanges: ["᠑᠐,᠐᠐᠐₮ ᠬᠦᠷᠲᠡᠯ᠎ᠡ", "᠑᠐,᠐᠐᠐–᠓᠐,᠐᠐᠐₮", "᠓᠐,᠐᠐᠐₮ ᠡᠴᠡ ᠳᠡᠭᠡᠭᠰᠢ"],
     perks: ["QPay ᠢᠶᠠᠷ ᠠᠶᠤᠯᠭᠦᠢ ᠲᠥᠯᠥᠨ᠎ᠡ", "ᠰᠢᠭᠤᠳ ᠲᠠᠲᠠᠵᠤ ᠠᠪᠤᠨ᠎ᠠ", "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢ ᠶᠢᠨ ᠪᠦᠲᠦᠭᠡᠯ"],
   },
 } as const;
@@ -194,9 +194,18 @@ const dict = {
 type Widen<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly Widen<U>[] : { [K in keyof T]: Widen<T[K]> };
 export type Dict = Widen<(typeof dict)["mn"]>;
 
+/**
+ * The Mongol bichig version stays hidden until its wording has been proofread.
+ * Set SHOW_MONGOL_SCRIPT=true in Vercel's environment variables to turn it on.
+ */
+export function scriptEnabled(): boolean {
+  return process.env.SHOW_MONGOL_SCRIPT === "true";
+}
+
 export async function getLang(): Promise<Lang> {
   const c = (await cookies()).get("lang")?.value;
-  return c === "en" || c === "mong" ? c : "mn";
+  if (c === "mong") return scriptEnabled() ? "mong" : "mn";
+  return c === "en" ? "en" : "mn";
 }
 
 export async function t(): Promise<{ lang: Lang; d: Dict }> {
@@ -204,8 +213,25 @@ export async function t(): Promise<{ lang: Lang; d: Dict }> {
   return { lang, d: dict[lang] as Dict };
 }
 
-export function formatMnt(n: number): string {
-  return new Intl.NumberFormat("en-US").format(n) + "₮";
+/** Writes numbers with Mongol bichig digits (᠐–᠙) in script mode, Western digits otherwise. */
+export function num(lang: Lang | undefined, n: number | string): string {
+  const s = String(n);
+  return lang === "mong" ? s.replace(/[0-9]/g, (c) => String.fromCharCode(0x1810 + Number(c))) : s;
+}
+
+export function formatMnt(n: number, lang?: Lang): string {
+  return num(lang, new Intl.NumberFormat("en-US").format(n)) + "₮";
+}
+
+/** A product's name and description for the current language, and whether they are in vertical script. */
+export function productText(
+  lang: Lang,
+  p: { title_mn: string; title_en: string; description_mn: string; description_en: string; title_mong?: string | null; description_mong?: string | null },
+) {
+  if (lang === "mong" && p.title_mong) {
+    return { title: p.title_mong, desc: p.description_mong || p.description_mn, script: true, descScript: !!p.description_mong };
+  }
+  return { title: pick(lang, p.title_mn, p.title_en), desc: pick(lang, p.description_mn, p.description_en), script: false, descScript: false };
 }
 
 export function pick(lang: Lang, mn: string, en: string): string {

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { activeProducts, discountPercent, type Product } from "@/lib/db";
-import { t } from "@/lib/i18n";
+import { t, num } from "@/lib/i18n";
 import ProductCard from "../components/ProductCard";
+import { IconSearch } from "../components/icons";
 
 export const dynamic = "force-dynamic";
 
-type SP = { kind?: string; q?: string; price?: string; sort?: string; sale?: string };
+type SP = { kind?: string; q?: string; price?: string; sort?: string; sale?: string; search?: string };
 
 const PRICE = [
   (p: Product) => p.price_mnt < 10000,
@@ -30,7 +31,7 @@ export default async function Shop({ searchParams }: { searchParams: Promise<SP>
 
   // Build a link that changes one filter and keeps the rest.
   const link = (patch: Partial<SP>) => {
-    const next = { ...sp, ...patch };
+    const next = { ...sp, ...patch, search: undefined };
     const qs = new URLSearchParams(Object.entries(next).filter(([, v]) => v) as [string, string][]).toString();
     return `/shop${qs ? `?${qs}` : ""}`;
   };
@@ -40,6 +41,13 @@ export default async function Shop({ searchParams }: { searchParams: Promise<SP>
 
   return (
     <div className="wrap page">
+      {lang === "mong" && (
+        <form action="/shop" className="search shop-search" role="search">
+          <IconSearch size={17} />
+          <input name="q" type="search" defaultValue={sp.q ?? ""} aria-label={d.search} autoFocus={sp.search === "1"} />
+          {kind && <input type="hidden" name="kind" value={kind} />}
+        </form>
+      )}
       <nav className="crumbs"><Link href="/" className="vt">{d.home}</Link> / <span className="vt">{kind ? d.kind[kind] : d.shop}</span></nav>
       <div className="shop">
         <aside className="filters">
@@ -70,7 +78,7 @@ export default async function Shop({ searchParams }: { searchParams: Promise<SP>
         <section>
           <div className="shop-head">
             <h1 className={q ? "" : "vt"}>{q ? `“${sp.q}”` : kind ? d.kind[kind] : d.shop}</h1>
-            <span className="muted">{items.length} <span className="vt">{d.results}</span></span>
+            <span className="muted">{num(lang, items.length)} <span className="vt">{d.results}</span></span>
           </div>
           {items.length === 0 ? (
             <p className="empty"><span className="vt">{d.noResults}</span></p>

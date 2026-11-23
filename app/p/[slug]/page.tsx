@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { activeProducts, coverUrl, discountPercent, productBySlug } from "@/lib/db";
-import { formatMnt, pick, t } from "@/lib/i18n";
+import { formatMnt, num, productText, t } from "@/lib/i18n";
 import { createOrder } from "@/lib/orders";
 import ProductCard from "../../components/ProductCard";
 import ProductRow from "../../components/ProductRow";
@@ -35,25 +35,26 @@ export default async function ProductPage({
   const cover = coverUrl(p.cover_path);
   const off = discountPercent(p);
   const Icon = kindIcon[p.kind];
-  const title = pick(lang, p.title_mn, p.title_en);
-  const desc = pick(lang, p.description_mn, p.description_en);
+  const text = productText(lang, p);
+  const title = text.title;
+  const desc = text.desc;
   const similar = (await activeProducts()).filter((x) => x.id !== p.id).sort((a, b) => Number(b.kind === p.kind) - Number(a.kind === p.kind)).slice(0, 10);
 
   return (
     <div className="wrap page">
       <nav className="crumbs">
-        <Link href="/" className="vt">{d.home}</Link> / <Link href={`/shop?kind=${p.kind}`} className="vt">{d.kind[p.kind]}</Link> / <span>{title}</span>
+        <Link href="/" className="vt">{d.home}</Link> / <Link href={`/shop?kind=${p.kind}`} className="vt">{d.kind[p.kind]}</Link> / <span className={text.script ? "vt" : ""}>{title}</span>
       </nav>
       <div className="pd">
         <div className={`pd-img tint-${p.kind}`}>
           {cover ? <img src={cover} alt="" /> : <Icon size={120} />}
-          {off && <span className="badge-off big">−{off}%</span>}
+          {off && <span className="badge-off big">−{num(lang, off)}%</span>}
         </div>
         <div className="pd-info">
-          <h1>{title}</h1>
+          <h1 className={text.script ? "vt" : ""}>{title}</h1>
           <div className="pd-price">
-            <strong>{formatMnt(p.price_mnt)}</strong>
-            {off && <><s>{formatMnt(p.compare_at_mnt!)}</s><span className="save">{off}% <span className="vt">{d.off}</span></span></>}
+            <strong>{formatMnt(p.price_mnt, lang)}</strong>
+            {off && <><s>{formatMnt(p.compare_at_mnt!, lang)}</s><span className="save">{num(lang, off)}% <span className="vt">{d.off}</span></span></>}
           </div>
           <form action={buy} className="buybox">
             <input type="hidden" name="slug" value={p.slug} />
@@ -74,7 +75,7 @@ export default async function ProductPage({
       {desc && (
         <section className="pd-desc">
           <h2 className="vt">{d.details}</h2>
-          <p>{desc}</p>
+          <p className={text.descScript ? "vt desc-vt" : ""}>{desc}</p>
         </section>
       )}
 

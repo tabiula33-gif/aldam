@@ -21,6 +21,8 @@ create table if not exists products (
   title_en text not null default '',
   description_mn text not null default '',
   description_en text not null default '',
+  title_mong text,          -- optional Mongol bichig name
+  description_mong text,    -- optional Mongol bichig description
   price_mnt integer not null check (price_mnt > 0),
   compare_at_mnt integer,   -- optional "was" price, shown crossed out
   cover_path text,          -- path in the public "covers" bucket

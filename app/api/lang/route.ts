@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
+import { scriptEnabled } from "@/lib/i18n";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const req2 = url.searchParams.get("to");
-  const to = req2 === "en" || req2 === "mong" ? req2 : "mn";
+  const to = req2 === "en" || (req2 === "mong" && scriptEnabled()) ? req2 : "mn";
   // Only return to a page on this site.
   let path = "/";
   const ref = req.headers.get("referer");
