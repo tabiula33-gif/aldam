@@ -360,11 +360,16 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
 .shop-search { max-width: 420px; margin: 0 0 18px; }
 
 /* product names and descriptions written in Mongol bichig */
-.mong .pcard-name.vt { display: block; -webkit-line-clamp: unset; height: 150px; overflow: hidden; font-weight: 400; }
-.mong .pcard:has(.pcard-name.vt) { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto 1fr; column-gap: 10px; }
-.mong .pcard:has(.pcard-name.vt) .pcard-img { grid-column: 1 / -1; }
-.mong .pcard:has(.pcard-name.vt) .pcard-name { grid-row: 2 / 4; }
-.mong .pcard:has(.pcard-name.vt) .pcard-price { flex-direction: column; align-items: flex-start; gap: 2px; }
+/* products stack in a grid that scrolls down with the page, not sideways */
+.mong .prow-track { grid-auto-flow: row; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); grid-auto-columns: unset; gap: 14px; overflow: visible; scroll-snap-type: none; }
+.mong .prow-actions .round { display: none; }
+.mong .pcard { height: 470px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); column-gap: 10px; overflow: hidden; }
+.mong .pcard-img { grid-column: 1 / -1; aspect-ratio: 3 / 4; margin-bottom: 10px; border-radius: calc(var(--radius) - 6px); }
+.mong .pcard-name { grid-row: 2; padding-left: 2px; }
+.mong .pcard-name.vt { display: block; -webkit-line-clamp: unset; height: 100%; max-height: 100%; overflow: hidden; font-weight: 400; }
+.mong .pcard-price { grid-row: 2; flex-direction: column; align-items: flex-start; gap: 2px; }
+.mong .pcard:not(:has(.pcard-name.vt)) { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+.mong .pcard:not(:has(.pcard-name.vt)) .pcard-price { grid-row: 3; }
 .mong .pd-info:has(h1.vt) { display: grid; grid-template-columns: auto 1fr; column-gap: 22px; align-items: start; }
 .mong .pd-info h1.vt { grid-row: 1 / 5; max-height: 460px; margin: 0; }
 .mong .desc-vt { height: 380px; max-width: 100%; overflow-x: auto; white-space: pre-line; }
@@ -382,7 +387,12 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
   .rail-lang a { padding: 4px 6px; font-size: 0.7rem; }
   .mong .wrap { padding: 0 12px; }
   .mong .banners { margin: 0 -12px 28px; padding: 0 12px; }
-  .mong .prow-track { margin: 0 -12px 0 0; padding: 0 12px 0 0; grid-auto-columns: 62%; }
+  .mong .prow { grid-template-columns: 1fr; }
+  .mong .prow-head { flex-direction: row; align-items: flex-start; }
+  .mong .prow-actions { flex-direction: row; }
+  .mong .prow-track { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; }
+  .mong .pcard { height: 400px; padding: 6px; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .mong .pcard .pcard-price { grid-row: 3; grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 6px; padding-top: 6px; }
   .mong .pd-info:has(h1.vt) { grid-template-columns: 1fr; }
   .mong .pd-info h1.vt { grid-row: auto; max-height: 300px; margin-bottom: 12px; }
 }
