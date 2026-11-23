@@ -28,6 +28,7 @@ export default async function Home() {
 
   return (
     <div className="wrap home">
+      <div className="home-cols">
       <section className="banners">
         {banners.map((b) => (
           <Link key={b.cls} href={b.href} className={`banner ${b.cls}`}>
@@ -44,6 +45,7 @@ export default async function Home() {
         ))}
       </section>
 
+      <div className="home-rows">
       {all.length === 0 ? (
         <p className="empty"><span className="vt">{d.empty}</span></p>
       ) : (
@@ -62,6 +64,8 @@ export default async function Home() {
           })}
         </>
       )}
+      </div>
+      </div>
     </div>
   );
 }

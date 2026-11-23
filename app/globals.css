@@ -277,9 +277,25 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
 .mong .chip { flex-direction: column; padding: 5px 5px 12px; border-radius: 20px; gap: 8px; }
 .mong .chip .vt { max-height: 110px; }
 
+/* home: category banners in a left column, product rows on the right, one vertical page scroll */
+.home-cols, .home-rows { display: contents; }
+.mong .home-cols { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.mong .home-rows { display: block; min-width: 0; }
+.mong .banners { min-width: 0; display: flex; flex-direction: column; gap: 14px; margin: 0; position: sticky; top: 16px; overflow: visible; padding: 0; }
+.mong .banner, .mong .banner.b-main { min-height: 0; height: calc((100vh - 60px) / 3); max-height: 260px; min-height: 200px; padding: 20px; flex: none; }
+.mong .banner .banner-text, .mong .banner.b-main .banner-text { height: 100%; max-width: 70%; }
+.mong .banners .banner.b-main h2 { font-size: 1.5rem; }
+.mong .banners .banner-art { opacity: 0.25; }
+.mong .banner .banner-art { width: 34%; }
+@media (max-width: 900px) {
+  .mong .home-cols { grid-template-columns: minmax(0, 1fr); }
+  .mong .banners { position: static; }
+  .mong .banner, .mong .banner.b-main { height: 200px; }
+  .mong .banners .banner.b-main { height: 250px; }
+}
+
 /* banners: title and text as columns */
-.mong .banner-text { writing-mode: vertical-lr; max-width: 62%; height: 150px; gap: 6px; }
-.mong .banner.b-main .banner-text { height: 300px; }
+.mong .banner-text { writing-mode: vertical-lr; gap: 6px; }
 .mong .banner-text > .vt { writing-mode: inherit; }
 .mong .banner h2 { margin: 0 6px 0 0; }
 .mong .banner.b-main h2 { font-size: 2rem; }
@@ -386,7 +402,6 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
   .snav-item .vt { max-height: 120px; font-size: 1em; }
   .rail-lang a { padding: 4px 6px; font-size: 0.7rem; }
   .mong .wrap { padding: 0 12px; }
-  .mong .banners { margin: 0 -12px 28px; padding: 0 12px; }
   .mong .prow { grid-template-columns: 1fr; }
   .mong .prow-head { flex-direction: row; align-items: flex-start; }
   .mong .prow-actions { flex-direction: row; }
