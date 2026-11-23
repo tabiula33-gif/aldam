@@ -35,30 +35,30 @@ export default async function Shop({ searchParams }: { searchParams: Promise<SP>
     return `/shop${qs ? `?${qs}` : ""}`;
   };
   const opt = (on: boolean, href: string, label: string) => (
-    <Link href={href} className={`opt ${on ? "on" : ""}`}><span className="radio" />{label}</Link>
+    <Link href={href} className={`opt ${on ? "on" : ""}`}><span className="radio" /><span className="vt">{label}</span></Link>
   );
 
   return (
     <div className="wrap page">
-      <nav className="crumbs"><Link href="/">{d.home}</Link> / <span>{kind ? d.kind[kind] : d.shop}</span></nav>
+      <nav className="crumbs"><Link href="/" className="vt">{d.home}</Link> / <span className="vt">{kind ? d.kind[kind] : d.shop}</span></nav>
       <div className="shop">
         <aside className="filters">
           <div className="filters-head">
-            <strong>{d.filters}</strong>
-            <Link href="/shop" className="muted">{d.reset}</Link>
+            <strong className="vt">{d.filters}</strong>
+            <Link href="/shop" className="muted vt">{d.reset}</Link>
           </div>
           <div className="fgroup">
-            <h4>{d.type}</h4>
+            <h4 className="vt">{d.type}</h4>
             {opt(!kind, link({ kind: undefined }), d.any)}
             {(["pdf", "planner", "course"] as const).map((k) => opt(kind === k, link({ kind: k }), d.kind[k]))}
           </div>
           <div className="fgroup">
-            <h4>{d.price}</h4>
+            <h4 className="vt">{d.price}</h4>
             {opt(!PRICE[priceIdx], link({ price: undefined }), d.any)}
             {d.priceRanges.map((label, i) => opt(priceIdx === i && !!sp.price, link({ price: String(i) }), label))}
           </div>
           <div className="fgroup">
-            <h4>{d.sort}</h4>
+            <h4 className="vt">{d.sort}</h4>
             {opt(!sp.sort, link({ sort: undefined }), d.sortNew)}
             {opt(sp.sort === "low", link({ sort: "low" }), d.sortLow)}
             {opt(sp.sort === "high", link({ sort: "high" }), d.sortHigh)}
@@ -69,11 +69,11 @@ export default async function Shop({ searchParams }: { searchParams: Promise<SP>
         </aside>
         <section>
           <div className="shop-head">
-            <h1>{q ? `“${sp.q}”` : kind ? d.kind[kind] : d.shop}</h1>
-            <span className="muted">{items.length} {d.results}</span>
+            <h1 className={q ? "" : "vt"}>{q ? `“${sp.q}”` : kind ? d.kind[kind] : d.shop}</h1>
+            <span className="muted">{items.length} <span className="vt">{d.results}</span></span>
           </div>
           {items.length === 0 ? (
-            <p className="empty">{d.noResults}</p>
+            <p className="empty"><span className="vt">{d.noResults}</span></p>
           ) : (
             <div className="pgrid">{items.map((p) => <ProductCard key={p.id} p={p} lang={lang} d={d} />)}</div>
           )}

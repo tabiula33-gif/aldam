@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-export type Lang = "mn" | "en";
+export type Lang = "mn" | "en" | "mong"; // mong = Mongol bichig (traditional script)
 
 const dict = {
   mn: {
@@ -127,6 +127,68 @@ const dict = {
     contact: "Contact",
     rights: "All rights reserved.",
   },
+  mong: {
+    tagline: "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢᠳ ᠦᠨ ᠳᠢᠵᠢᠲᠠᠯ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    all: "ᠪᠦᠬᠦ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    empty: "ᠣᠳᠣ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ ᠪᠠᠶᠢᠬᠤ ᠦᠭᠡᠢ᠃",
+    buy: "ᠬᠤᠳᠠᠯᠳᠤᠨ ᠠᠪᠬᠤ",
+    email: "ᠢᠮᠧᠯ ᠬᠠᠶᠢᠭ",
+    emailHint: "ᠲᠠᠲᠠᠬᠤ ᠬᠣᠯᠪᠣᠭᠠᠰᠤ ᠶᠢ ᠡᠨᠡ ᠬᠠᠶᠢᠭ ᠢᠶᠠᠷ ᠪᠠᠲᠤᠯᠠᠨ᠎ᠠ᠃",
+    pay: "ᠲᠥᠯᠥᠪᠦᠷᠢ ᠲᠥᠯᠥᠬᠦ",
+    payWith: "QPay ᠪᠤᠶᠤ ᠪᠠᠩᠬᠢ ᠶᠢᠨ ᠠᠫᠫ ᠢᠶᠠᠷ ᠤᠩᠰᠢᠭᠤᠯᠤᠨ᠎ᠠ ᠤᠤ",
+    waiting: "ᠲᠥᠯᠥᠪᠦᠷᠢ ᠶᠢ ᠬᠦᠯᠢᠶᠡᠵᠦ ᠪᠠᠶᠢᠨ᠎ᠠ…",
+    paid: "ᠲᠥᠯᠥᠪᠦᠷᠢ ᠠᠮᠵᠢᠯᠲᠠ ᠲᠠᠢ!",
+    download: "ᠲᠠᠲᠠᠬᠤ",
+    keepLink: "ᠡᠨᠡ ᠬᠠᠭᠤᠳᠠᠰᠤᠨ ᠤ ᠬᠣᠯᠪᠣᠭᠠᠰᠤ ᠶᠢ ᠬᠠᠳᠠᠭᠠᠯᠠᠷᠠᠢ᠃",
+    simulate: "ᠲᠤᠷᠰᠢᠯᠲᠠ ᠶᠢᠨ ᠲᠥᠯᠥᠪᠦᠷᠢ",
+    testMode: "ᠲᠤᠷᠰᠢᠯᠲᠠ ᠶᠢᠨ ᠭᠣᠷᠢᠮ",
+    notFound: "ᠣᠯᠳᠠᠰᠤᠨ ᠦᠭᠡᠢ",
+    back: "ᠪᠤᠴᠠᠬᠤ",
+    search: "ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ ᠬᠠᠢᠬᠤ",
+    bestSellers: "ᠰᠢᠯᠢᠳᠡᠭ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    newArrivals: "ᠰᠢᠨ᠎ᠡ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    viewAll: "ᠪᠦᠭᠦᠳᠡ ᠶᠢ ᠦᠵᠡᠬᠦ",
+    shop: "ᠳᠡᠯᠭᠡᠭᠦᠷ",
+    home: "ᠨᠢᠭᠤᠷ",
+    filters: "ᠰᠢᠭᠦᠯᠲᠡᠭᠦᠷ",
+    reset: "ᠠᠷᠢᠯᠭᠠᠬᠤ",
+    type: "ᠲᠦᠷᠦᠯ",
+    any: "ᠪᠦᠭᠦᠳᠡ",
+    price: "ᠦᠨ᠎ᠡ",
+    sort: "ᠡᠷᠡᠮᠪᠡᠯᠡᠬᠦ",
+    sortNew: "ᠰᠢᠨ᠎ᠡ ᠨᠢ ᠡᠬᠢᠨ ᠳᠤ",
+    sortLow: "ᠦᠨ᠎ᠡ᠄ ᠪᠠᠭ᠎ᠠ ᠠᠴᠠ ᠶᠡᠬᠡ",
+    sortHigh: "ᠦᠨ᠎ᠡ᠄ ᠶᠡᠬᠡ ᠡᠴᠡ ᠪᠠᠭ᠎ᠠ",
+    onSale: "ᠬᠢᠮᠳᠤᠷᠠᠯ ᠲᠠᠢ",
+    results: "ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    noResults: "ᠲᠣᠬᠢᠷᠠᠬᠤ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ ᠣᠯᠳᠠᠰᠤᠨ ᠦᠭᠡᠢ᠃",
+    similar: "ᠲᠥᠰᠢᠲᠡᠢ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    details: "ᠳᠡᠯᠭᠡᠷᠡᠩᠭᠦᠢ",
+    off: "ᠬᠢᠮᠳᠤᠷᠠᠯ",
+    aboutInstant: "ᠰᠢᠭᠤᠳ ᠲᠠᠲᠠᠵᠤ ᠠᠪᠤᠨ᠎ᠠ",
+    aboutQpay: "QPay ᠢᠶᠠᠷ ᠠᠶᠤᠯᠭᠦᠢ ᠲᠥᠯᠥᠨ᠎ᠡ",
+    aboutLocal: "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢ ᠶᠢᠨ ᠪᠦᠲᠦᠭᠡᠯ",
+    b1Tag: "ᠰᠢᠨ᠎ᠡ",
+    b1Title: "ᠰᠢᠨ᠎ᠡ ᠣᠨ ᠢ ᠲᠥᠯᠥᠪᠯᠡᠭᠡ ᠲᠡᠢ ᠡᠬᠢᠯᠡ",
+    b1Text: "2027 ᠣᠨ ᠤ ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ᠂ ᠬᠤᠸᠠᠩᠯᠢ",
+    b2Title: "ᠰᠤᠷᠭᠠᠯᠲᠠ ᠨᠤᠭᠤᠳ",
+    b2Text: "ᠭᠡᠷ ᠡᠴᠡ ᠪᠡᠨ ᠰᠢᠨ᠎ᠡ ᠤᠷ ᠴᠢᠳᠠᠪᠤᠷᠢ ᠡᠵᠡᠮᠰᠢ",
+    b3Title: "PDF ᠭᠠᠷ ᠤᠨ ᠠᠪᠤᠯᠭ᠎ᠠ",
+    b3Text: "ᠬᠡᠪᠯᠡᠭᠡᠳ ᠰᠢᠭᠤᠳ ᠬᠡᠷᠡᠭᠯᠡ",
+    shopNow: "ᠦᠵᠡᠬᠦ",
+    heroTitle: "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢᠳ ᠦᠨ ᠳᠢᠵᠢᠲᠠᠯ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    heroText: "PDF᠂ ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ᠂ ᠰᠤᠷᠭᠠᠯᠲᠠ",
+    browse: "ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ ᠦᠵᠡᠬᠦ",
+    newest: "ᠰᠢᠨ᠎ᠡ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ",
+    whatYouGet: "ᠲᠥᠯᠥᠪᠦᠷᠢ ᠲᠥᠯᠥᠭᠰᠡᠨ ᠦ ᠳᠠᠷᠠᠭ᠎ᠠ ᠲᠠᠲᠠᠬᠤ ᠬᠣᠯᠪᠣᠭᠠᠰᠤ ᠰᠢᠭᠤᠳ ᠭᠠᠷᠤᠨ᠎ᠠ᠃",
+    secure: "ᠲᠥᠯᠥᠪᠦᠷᠢ QPay ᠢᠶᠠᠷ ᠪᠠᠲᠤᠯᠠᠭᠳᠠᠨ᠎ᠠ",
+    footerText: "ᠮᠣᠩᠭᠣᠯ ᠳᠤ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠭᠰᠡᠨ ᠳᠢᠵᠢᠲᠠᠯ ᠪᠦᠲᠦᠭᠡᠭᠳᠡᠬᠦᠨ ᠦ ᠳᠡᠯᠭᠡᠭᠦᠷ᠃",
+    contact: "ᠬᠣᠯᠪᠣᠭ᠎ᠠ ᠪᠠᠷᠢᠬᠤ",
+    rights: "ᠪᠦᠬᠦ ᠡᠷᠬᠡ ᠬᠠᠤᠯᠢ ᠪᠠᠷ ᠬᠠᠮᠠᠭᠠᠯᠠᠭᠳᠠᠭᠰᠠᠨ᠃",
+    kind: { pdf: "PDF", planner: "ᠲᠥᠯᠥᠪᠯᠡᠭᠴᠢ", course: "ᠰᠤᠷᠭᠠᠯᠲᠠ" },
+    priceRanges: ["10,000₮ ᠬᠦᠷᠲᠡᠯ᠎ᠡ", "10,000–30,000₮", "30,000₮ ᠡᠴᠡ ᠳᠡᠭᠡᠭᠰᠢ"],
+    perks: ["QPay ᠢᠶᠠᠷ ᠠᠶᠤᠯᠭᠦᠢ ᠲᠥᠯᠥᠨ᠎ᠡ", "ᠰᠢᠭᠤᠳ ᠲᠠᠲᠠᠵᠤ ᠠᠪᠤᠨ᠎ᠠ", "ᠮᠣᠩᠭᠣᠯ ᠪᠦᠲᠦᠭᠡᠭᠴᠢ ᠶᠢᠨ ᠪᠦᠲᠦᠭᠡᠯ"],
+  },
 } as const;
 
 type Widen<T> = T extends string ? string : T extends readonly (infer U)[] ? readonly Widen<U>[] : { [K in keyof T]: Widen<T[K]> };
@@ -134,7 +196,7 @@ export type Dict = Widen<(typeof dict)["mn"]>;
 
 export async function getLang(): Promise<Lang> {
   const c = (await cookies()).get("lang")?.value;
-  return c === "en" ? "en" : "mn";
+  return c === "en" || c === "mong" ? c : "mn";
 }
 
 export async function t(): Promise<{ lang: Lang; d: Dict }> {
@@ -147,5 +209,6 @@ export function formatMnt(n: number): string {
 }
 
 export function pick(lang: Lang, mn: string, en: string): string {
+  // Product data has Cyrillic and English only; the Mongol bichig version shows the Cyrillic text.
   return lang === "en" && en ? en : mn;
 }

@@ -107,7 +107,7 @@ header.site { background: var(--bg); border-bottom: 1px solid var(--line); posit
 .banner p { margin: 0; font-size: 0.92rem; opacity: 0.85; }
 .banner.b-main p { font-size: 1.05rem; }
 .banner-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: var(--gold); color: #1c1a17; border-radius: 6px; padding: 3px 8px; margin-bottom: 14px; }
-.banner-go { margin-top: auto; padding-top: 16px; display: inline-flex; }
+.banner-go { margin-block-start: auto; padding-block-start: 16px; display: inline-flex; }
 .banner-go svg { width: 40px; height: 40px; padding: 10px; border-radius: 50%; background: var(--blue); color: #fff; box-sizing: border-box; }
 .banner.b-main .banner-go svg { background: var(--gold); color: #1c1a17; }
 .banner-art { position: absolute; right: 18px; bottom: 18px; top: 18px; width: 38%; display: grid; place-items: center; }
@@ -259,3 +259,76 @@ footer.site .copy { width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.12)
   .banner-text { max-width: 100%; }
   .prow-head h2 { font-size: 1.1rem; }
 }
+
+/* ---------- Mongol bichig (traditional script) version ----------
+   Interface text marked .vt is written top-to-bottom, columns left-to-right.
+   Product names and descriptions stay in Cyrillic and stay horizontal. */
+.mong body { font-family: var(--font-b); }
+.mong .vt, .lang a.script { font-family: var(--font-mong), var(--font-b); }
+.mong .vt { writing-mode: vertical-lr; text-orientation: mixed; line-height: 1.6; letter-spacing: 0; }
+.lang a.script { font-size: 0.85rem; padding-top: 2px; padding-bottom: 2px; }
+.mong header.site { position: static; }
+
+/* chips: icon on top, label below */
+.mong .chips { align-items: flex-start; }
+.mong .chip { flex-direction: column; padding: 5px 5px 12px; border-radius: 20px; gap: 8px; }
+.mong .chip .vt { max-height: 110px; }
+
+/* banners: title and text as columns */
+.mong .banner-text { writing-mode: vertical-lr; max-width: 62%; height: 150px; gap: 6px; }
+.mong .banner.b-main .banner-text { height: 300px; }
+.mong .banner-text > .vt { writing-mode: inherit; }
+.mong .banner h2 { margin: 0 6px 0 0; }
+.mong .banner.b-main h2 { font-size: 2rem; }
+.mong .banner-tag { margin: 0 14px 0 0; padding: 8px 3px; align-self: flex-start; }
+.mong .banner-go { padding-block-start: 0; margin-block-start: auto; }
+
+/* row headings stand in their own column left of the products */
+.mong .prow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start; }
+.mong .prow-head { flex-direction: column; align-items: center; justify-content: flex-start; margin: 0; gap: 12px; }
+.mong .prow-head h2 { max-height: 220px; }
+.mong .prow-actions { flex-direction: column; }
+.mong .pill { flex-direction: column; border-radius: 18px; padding: 10px 7px; gap: 6px; }
+.mong .pill .vt { max-height: 130px; }
+
+/* product cards: category label sits vertically on the image */
+.mong .pcard { position: relative; }
+.mong .pcard-kind { position: absolute; top: 10px; right: 10px; background: var(--bg); border-radius: 999px; padding: 8px 3px; font-size: 0.8rem; }
+.mong .pcard-kind .vt { max-height: 90px; }
+
+/* shop filters: options become rows of vertical labels */
+.mong .filters-head { align-items: flex-start; }
+.mong .fgroup { display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: flex-start; }
+.mong .fgroup h4 { margin: 0 6px 0 0; }
+.mong .opt { flex-direction: column; gap: 6px; padding: 4px; }
+.mong .opt .vt { max-height: 140px; }
+.mong .shop-head { align-items: flex-start; }
+.mong .crumbs { display: flex; align-items: flex-start; gap: 6px; }
+.mong .crumbs .vt { max-height: 80px; }
+
+/* product page */
+.mong .buybox { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: stretch; }
+.mong .buybox label { margin: 0; max-height: 140px; }
+.mong .buybox .hint { display: none; }
+.mong .buybox input { align-self: center; }
+.mong .buybox .btn.full { width: auto; margin: 0; padding: 14px 12px; border-radius: 18px; }
+.mong .buybox .btn .vt { max-height: 140px; }
+.mong .buybox .error { grid-column: 1 / -1; }
+.mong .about { display: flex; gap: 14px; align-items: flex-start; }
+.mong .about li { flex-direction: column; align-items: center; }
+.mong .about li .vt { max-height: 170px; }
+.mong .pd-desc h2 { float: left; margin: 0 16px 0 0; }
+.mong .save .vt { display: none; }
+
+/* order page and empty states */
+.mong .order-wrap .panel p, .mong .notice, .mong .empty { display: flex; justify-content: center; align-items: flex-start; gap: 8px; }
+.mong .order-wrap .vt, .mong .notice .vt, .mong .empty .vt { max-height: 220px; }
+.mong .order-wrap .btn { display: flex; justify-content: center; }
+
+/* footer */
+.mong footer.site .wrap { align-items: flex-start; }
+.mong footer.site p.vt { max-height: 160px; max-width: none; }
+.mong footer.site .wrap > div:not(.copy):not(:first-child) { display: flex; gap: 10px; align-items: flex-start; }
+.mong footer.site a.vt { margin: 0; max-height: 120px; }
+.mong footer.site .copy { display: flex; gap: 8px; align-items: flex-start; }
+.mong footer.site .copy .vt { max-height: 160px; }

@@ -18,7 +18,7 @@ export default function ProductCard({ p, lang, d }: { p: Product; lang: Lang; d:
         <strong>{formatMnt(p.price_mnt)}</strong>
         {off && <s>{formatMnt(p.compare_at_mnt!)}</s>}
       </div>
-      <div className={`pcard-kind k-${p.kind}`}>{d.kind[p.kind]}</div>
+      <div className={`pcard-kind k-${p.kind}`}><span className="vt">{d.kind[p.kind]}</span></div>
     </Link>
   );
 }
